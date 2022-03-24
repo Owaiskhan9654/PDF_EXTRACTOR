@@ -10,7 +10,7 @@ global f
 @app.route('/extractor123', methods=['GET', 'POST'])
 def pdf_extractor():
     global f
-    file = 'static\\uploads\\Current.pdf'
+    file = 'static/uploads/Current.pdf'
 
     df1 = pd.DataFrame(
         columns=['Doc Type', 'Document.No', 'Posting Date', 'Bill.No', 'Bill.Date', 'Gross', 'Net.Amt Deductions',
@@ -77,8 +77,8 @@ def upload():
 
         basepath = os.path.dirname(__file__)
         file_path = os.path.join(
-            basepath, 'static\\uploads', secure_filename(f.filename))
-        f.save('static\\uploads\\Current.pdf')
+            basepath, 'static/uploads', secure_filename(f.filename))
+        f.save('static/uploads/Current.pdf')
         print(file_path)
         return 'Success'
     return 'Success'
