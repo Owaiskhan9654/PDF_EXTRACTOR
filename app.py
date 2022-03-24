@@ -3,7 +3,6 @@ import os
 import pandas as pd
 import pdfplumber
 from flask import Flask, redirect, url_for, request, render_template,Response
-from werkzeug.utils import secure_filename
 app = Flask(__name__)
 global f
 
@@ -60,7 +59,7 @@ def pdf_extractor():
     return Response(
         csv_raw,
         mimetype="text/csv",
-        headers={"Content-disposition": "attachment; filename= {}.csv".format(secure_filename(f.filename))})
+        headers={"Content-disposition": "attachment; filename= {}.csv".format(f.filename)})
 
 
 
@@ -77,7 +76,7 @@ def upload():
 
         basepath = os.path.dirname(__file__)
         file_path = os.path.join(
-            basepath, 'static/uploads', secure_filename(f.filename))
+            basepath, 'static/uploads', f.filename)
         f.save('static/uploads/Current.pdf')
         print(file_path)
         return 'Success'
