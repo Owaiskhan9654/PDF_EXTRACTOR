@@ -3,6 +3,7 @@ import os
 import pandas as pd
 import pdfplumber
 from flask import Flask, redirect, url_for, request, render_template,Response
+import io
 app = Flask(__name__)
 global f
 
@@ -15,10 +16,12 @@ def pdf_extractor():
         columns=['Doc Type', 'Document.No', 'Posting Date', 'Bill.No', 'Bill.Date', 'Gross', 'Net.Amt Deductions',
                  'TDS'])
     k = 0
-    with pdfplumber.open(file) as pdf:
+    with open(file, 'rb') as f:
+        content = io.BytesIO(f.read())
+    with pdfplumber.open(content) as pdf:
         page0 = pdf.pages[0]
     for i in range(0, len(pdf.pages)):
-        with pdfplumber.open(file) as pdf:
+        with pdfplumber.open(content) as pdf:
             page = pdf.pages[i]
             text = page.extract_table()
             if i != len(pdf.pages) - 1:
