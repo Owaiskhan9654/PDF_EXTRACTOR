@@ -5,6 +5,7 @@ import pdfplumber
 from flask import Flask, redirect, url_for, request, render_template,Response
 import io
 app = Flask(__name__)
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 global f
 
 @app.route('/extractor123', methods=['GET', 'POST'])
