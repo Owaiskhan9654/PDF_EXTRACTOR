@@ -4,9 +4,12 @@ import pandas as pd
 import pdfplumber
 from flask import Flask, redirect, url_for, request, render_template,Response
 import io
+from datetime import datetime
 app = Flask(__name__)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 global f
+
+
 
 @app.route('/extractor123', methods=['GET', 'POST'])
 def pdf_extractor():
@@ -60,10 +63,12 @@ def pdf_extractor():
                         k = k + 1
     df1['D/C'] = 'C'
     csv_raw = df1.to_csv(index=False)
+    now = datetime.now()
+    dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
     return Response(
         csv_raw,
         mimetype="text/csv",
-        headers={"Content-disposition": "attachment; filename= {}.csv".format("ABC")})
+        headers={"Content-disposition": "attachment; filename= {}.csv".format("File Version "+dt_string)})
 
 
 
